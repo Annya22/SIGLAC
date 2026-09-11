@@ -1,0 +1,20 @@
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Temporales
+*.tmp
+*.temp
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
