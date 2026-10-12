@@ -84,57 +84,67 @@
 
                     <td>
 
-                        <div class="actions">
+                        @if ($rol->slug === 'administrador')
 
-                            @if (
-                                auth()->user()->hasPermission('roles.editar') &&
-                                auth()->user()->hasPermission('roles.asignar_permisos')
-                            )
+                            <span class="badge">
+                                Rol protegido
+                            </span>
 
-                                <a
-                                    href="{{ route('roles.edit', $rol) }}"
-                                    class="btn btn-secondary"
-                                >
-                                    Editar
-                                </a>
+                        @else
 
-                            @endif
+                            <div class="actions">
 
-                            @if (auth()->user()->hasPermission('roles.cambiar_estado'))
+                                @if (
+                                    auth()->user()->hasPermission('roles.editar') &&
+                                    auth()->user()->hasPermission('roles.asignar_permisos')
+                                )
 
-                                <form
-                                    method="POST"
-                                    action="{{ route('roles.toggle-status', $rol) }}"
-                                >
+                                    <a
+                                        href="{{ route('roles.edit', $rol) }}"
+                                        class="btn btn-secondary"
+                                    >
+                                        Editar
+                                    </a>
 
-                                    @csrf
-                                    @method('PATCH')
+                                @endif
 
-                                    @if ($rol->activo)
+                                @if (auth()->user()->hasPermission('roles.cambiar_estado'))
 
-                                        <button
-                                            type="submit"
-                                            class="btn btn-danger"
-                                        >
-                                            Desactivar
-                                        </button>
+                                    <form
+                                        method="POST"
+                                        action="{{ route('roles.toggle-status', $rol) }}"
+                                    >
 
-                                    @else
+                                        @csrf
+                                        @method('PATCH')
 
-                                        <button
-                                            type="submit"
-                                            class="btn btn-success"
-                                        >
-                                            Activar
-                                        </button>
+                                        @if ($rol->activo)
 
-                                    @endif
+                                            <button
+                                                type="submit"
+                                                class="btn btn-danger"
+                                            >
+                                                Desactivar
+                                            </button>
 
-                                </form>
+                                        @else
 
-                            @endif
+                                            <button
+                                                type="submit"
+                                                class="btn btn-success"
+                                            >
+                                                Activar
+                                            </button>
 
-                        </div>
+                                        @endif
+
+                                    </form>
+
+                                @endif
+
+                            </div>
+
+                        @endif
 
                     </td>
 

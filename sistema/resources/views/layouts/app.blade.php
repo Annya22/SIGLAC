@@ -70,16 +70,58 @@
         .sidebar {
             width: 240px;
             background: #ffffff;
-            padding: 25px 15px;
+            padding: 20px 15px;
             border-right: 1px solid #e5e7eb;
         }
 
-        .sidebar-title {
+        /*
+        |--------------------------------------------------------------------------
+        | Secciones desplegables
+        |--------------------------------------------------------------------------
+        */
+
+        .sidebar-section {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-toggle {
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 11px 12px;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 7px;
+            color: #6b7280;
             font-size: 12px;
-            color: #9ca3af;
-            margin: 0 12px 12px;
-            text-transform: uppercase;
             font-weight: bold;
+            text-transform: uppercase;
+            text-align: left;
+        }
+
+        .sidebar-toggle:hover {
+            background: #f3f6fa;
+            color: #17365d;
+        }
+
+        .sidebar-arrow {
+            font-size: 14px;
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar-toggle[aria-expanded="true"] .sidebar-arrow {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-menu {
+            margin-top: 3px;
+        }
+
+        .sidebar-menu[hidden] {
+            display: none;
         }
 
         .sidebar a {
@@ -295,74 +337,192 @@
 
     <aside class="sidebar">
 
-        <p class="sidebar-title">Principal</p>
+{{-- INICIO --}}
+<div class="sidebar-section">
 
-        <a
-            href="{{ route('dashboard') }}"
-            class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
-        >
-            Inicio
-        </a>
+    <a
+        href="{{ route('dashboard') }}"
+        class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
+    >
+        Inicio
+    </a>
 
-@if (
-    auth()->user()->hasPermission('usuarios.ver') ||
-    auth()->user()->hasPermission('roles.ver') ||
-    auth()->user()->hasPermission('permisos.ver')
-)
+</div>
 
-    <p class="sidebar-title" style="margin-top: 25px;">
-        Seguridad
-    </p>
+        {{-- SEGURIDAD --}}
+        @if (
+            auth()->user()->hasPermission('usuarios.ver') ||
+            auth()->user()->hasPermission('roles.ver') ||
+            auth()->user()->hasPermission('permisos.ver')
+        )
 
-    @if (auth()->user()->hasPermission('usuarios.ver'))
+            @php
+                $seguridadAbierta =
+                    request()->routeIs('usuarios.*') ||
+                    request()->routeIs('roles.*') ||
+                    request()->routeIs('permisos.*');
+            @endphp
 
-        <a
-            href="{{ route('usuarios.index') }}"
-            class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}"
-        >
-            Usuarios
-        </a>
+            <div class="sidebar-section">
 
-    @endif
+                <button
+                    type="button"
+                    class="sidebar-toggle"
+                    data-sidebar-toggle="seguridad-menu"
+                    aria-expanded="{{ $seguridadAbierta ? 'true' : 'false' }}"
+                >
+                    <span>Seguridad</span>
+                    <span class="sidebar-arrow">⌄</span>
+                </button>
 
-    @if (auth()->user()->hasPermission('roles.ver'))
+                <div
+                    id="seguridad-menu"
+                    class="sidebar-menu"
+                    @if (!$seguridadAbierta) hidden @endif
+                >
 
-        <a
-            href="{{ route('roles.index') }}"
-            class="{{ request()->routeIs('roles.*') ? 'active' : '' }}"
-        >
-            Roles
-        </a>
+                    @if (auth()->user()->hasPermission('usuarios.ver'))
 
-    @endif
+                        <a
+                            href="{{ route('usuarios.index') }}"
+                            class="{{ request()->routeIs('usuarios.*') ? 'active' : '' }}"
+                        >
+                            Usuarios
+                        </a>
 
-    @if (auth()->user()->hasPermission('permisos.ver'))
+                    @endif
 
-        <a
-            href="{{ route('permisos.index') }}"
-            class="{{ request()->routeIs('permisos.*') ? 'active' : '' }}"
-        >
-            Permisos
-        </a>
+                    @if (auth()->user()->hasPermission('roles.ver'))
 
-    @endif
+                        <a
+                            href="{{ route('roles.index') }}"
+                            class="{{ request()->routeIs('roles.*') ? 'active' : '' }}"
+                        >
+                            Roles
+                        </a>
 
-@endif
+                    @endif
+
+                    @if (auth()->user()->hasPermission('permisos.ver'))
+
+                        <a
+                            href="{{ route('permisos.index') }}"
+                            class="{{ request()->routeIs('permisos.*') ? 'active' : '' }}"
+                        >
+                            Permisos
+                        </a>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+        @endif
+
+
+        {{-- DATOS ACADÉMICOS --}}
+        @if (
+            auth()->user()->hasPermission('instituciones.ver') ||
+            auth()->user()->hasPermission('niveles.ver') ||
+            auth()->user()->hasPermission('grados.ver') ||
+            auth()->user()->hasPermission('estudiantes.ver')
+        )
+
+            @php
+                $academicosAbierto =
+                    request()->routeIs('instituciones.*') ||
+                    request()->routeIs('niveles.*') ||
+                    request()->routeIs('grados.*') ||
+                    request()->routeIs('estudiantes.*');
+            @endphp
+
+            <div class="sidebar-section">
+
+                <button
+                    type="button"
+                    class="sidebar-toggle"
+                    data-sidebar-toggle="academicos-menu"
+                    aria-expanded="{{ $academicosAbierto ? 'true' : 'false' }}"
+                >
+                    <span>Datos académicos</span>
+                    <span class="sidebar-arrow">⌄</span>
+                </button>
+
+                <div
+                    id="academicos-menu"
+                    class="sidebar-menu"
+                    @if (!$academicosAbierto) hidden @endif
+                >
+
+                    @if (auth()->user()->hasPermission('instituciones.ver'))
+
+                        <a
+                            href="{{ route('instituciones.index') }}"
+                            class="{{ request()->routeIs('instituciones.*') ? 'active' : '' }}"
+                        >
+                            Instituciones educativas
+                        </a>
+
+                    @endif
+
+                    @if (auth()->user()->hasPermission('niveles.ver'))
+
+                        <a
+                            href="{{ route('niveles.index') }}"
+                            class="{{ request()->routeIs('niveles.*') ? 'active' : '' }}"
+                        >
+                            Niveles
+                        </a>
+
+                    @endif
+
+                    @if (auth()->user()->hasPermission('grados.ver'))
+
+                        <a
+                            href="{{ route('grados.index') }}"
+                            class="{{ request()->routeIs('grados.*') ? 'active' : '' }}"
+                        >
+                            Grados
+                        </a>
+
+                    @endif
+
+                    @if (auth()->user()->hasPermission('estudiantes.ver'))
+
+                        <a
+                            href="{{ route('estudiantes.index') }}"
+                            class="{{ request()->routeIs('estudiantes.*') ? 'active' : '' }}"
+                        >
+                            Estudiantes
+                        </a>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+        @endif
 
     </aside>
 
     <main class="content">
 
         @if (session('success'))
+
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
+
         @endif
 
         @if (session('error'))
+
             <div class="alert alert-error">
                 {{ session('error') }}
             </div>
+
         @endif
 
         @yield('content')
@@ -370,6 +530,32 @@
     </main>
 
 </div>
+
+<script>
+    document.querySelectorAll('[data-sidebar-toggle]').forEach(function (button) {
+
+        button.addEventListener('click', function () {
+
+            const menuId = button.getAttribute('data-sidebar-toggle');
+            const menu = document.getElementById(menuId);
+
+            if (!menu) {
+                return;
+            }
+
+            const estaAbierto = button.getAttribute('aria-expanded') === 'true';
+
+            button.setAttribute(
+                'aria-expanded',
+                estaAbierto ? 'false' : 'true'
+            );
+
+            menu.hidden = estaAbierto;
+
+        });
+
+    });
+</script>
 
 </body>
 </html>
