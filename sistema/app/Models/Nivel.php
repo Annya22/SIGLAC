@@ -27,17 +27,6 @@ class Nivel extends Model
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Grados del nivel
-    |--------------------------------------------------------------------------
-    |
-    | Ejemplo:
-    |
-    | Primaria → 1.º, 2.º, 3.º, 4.º, 5.º, 6.º
-    | Secundaria → 1.º, 2.º, 3.º, 4.º, 5.º
-    |
-    */
     public function grados()
     {
         return $this->hasMany(
@@ -46,11 +35,6 @@ class Nivel extends Model
         )->orderBy('orden');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Instituciones educativas que ofrecen este nivel
-    |--------------------------------------------------------------------------
-    */
     public function institucionesEducativas()
     {
         return $this->belongsToMany(
@@ -68,11 +52,6 @@ class Nivel extends Model
             ->withTimestamps();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Registros de la tabla intermedia
-    |--------------------------------------------------------------------------
-    */
     public function institucionNiveles()
     {
         return $this->hasMany(
@@ -81,11 +60,14 @@ class Nivel extends Model
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que creó el registro
-    |--------------------------------------------------------------------------
-    */
+    public function actas()
+    {
+        return $this->hasMany(
+            Acta::class,
+            'nivel_id'
+        );
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(
@@ -94,11 +76,6 @@ class Nivel extends Model
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que realizó la última modificación
-    |--------------------------------------------------------------------------
-    */
     public function updatedBy()
     {
         return $this->belongsTo(

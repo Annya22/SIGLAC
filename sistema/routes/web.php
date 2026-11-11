@@ -1,12 +1,21 @@
 <?php
 
+use App\Http\Controllers\ActaController;
+use App\Http\Controllers\ActaEstudianteController;
+use App\Http\Controllers\AsignaturaController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BusquedaController;
+use App\Http\Controllers\CursoDesaprobadoController;
+use App\Http\Controllers\DigitalizacionController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\GradoController;
 use App\Http\Controllers\InstitucionEducativaController;
 use App\Http\Controllers\NivelController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SubsanacionController;
+use App\Http\Controllers\TipoActaController;
+use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +40,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Dashboard
     |--------------------------------------------------------------------------
     */
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -40,6 +50,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Usuarios
     |--------------------------------------------------------------------------
     */
+
     Route::get('/usuarios', [UserController::class, 'index'])
         ->middleware('permiso:usuarios.ver')
         ->name('usuarios.index');
@@ -79,6 +90,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Roles
     |--------------------------------------------------------------------------
     */
+
     Route::get('/roles', [RoleController::class, 'index'])
         ->middleware('permiso:roles.ver')
         ->name('roles.index');
@@ -120,6 +132,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Permisos
     |--------------------------------------------------------------------------
     */
+
     Route::get('/permisos', [PermissionController::class, 'index'])
         ->middleware('permiso:permisos.ver')
         ->name('permisos.index');
@@ -129,6 +142,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Instituciones educativas
     |--------------------------------------------------------------------------
     */
+
     Route::get('/instituciones', [InstitucionEducativaController::class, 'index'])
         ->middleware('permiso:instituciones.ver')
         ->name('instituciones.index');
@@ -158,6 +172,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Niveles educativos
     |--------------------------------------------------------------------------
     */
+
     Route::get('/niveles', [NivelController::class, 'index'])
         ->middleware('permiso:niveles.ver')
         ->name('niveles.index');
@@ -187,6 +202,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Grados
     |--------------------------------------------------------------------------
     */
+
     Route::get('/grados', [GradoController::class, 'index'])
         ->middleware('permiso:grados.ver')
         ->name('grados.index');
@@ -216,6 +232,7 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
     | Estudiantes
     |--------------------------------------------------------------------------
     */
+
     Route::get('/estudiantes', [EstudianteController::class, 'index'])
         ->middleware('permiso:estudiantes.ver')
         ->name('estudiantes.index');
@@ -242,9 +259,307 @@ Route::middleware(['auth', 'usuario.activo'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
+    | Tipos de acta
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/tipos-acta', [TipoActaController::class, 'index'])
+        ->middleware('permiso:tipos_acta.ver')
+        ->name('tipos-acta.index');
+
+    Route::get('/tipos-acta/crear', [TipoActaController::class, 'create'])
+        ->middleware('permiso:tipos_acta.crear')
+        ->name('tipos-acta.create');
+
+    Route::post('/tipos-acta', [TipoActaController::class, 'store'])
+        ->middleware('permiso:tipos_acta.crear')
+        ->name('tipos-acta.store');
+
+    Route::get('/tipos-acta/{tipoActa}/editar', [TipoActaController::class, 'edit'])
+        ->middleware('permiso:tipos_acta.editar')
+        ->name('tipos-acta.edit');
+
+    Route::put('/tipos-acta/{tipoActa}', [TipoActaController::class, 'update'])
+        ->middleware('permiso:tipos_acta.editar')
+        ->name('tipos-acta.update');
+
+    Route::patch('/tipos-acta/{tipoActa}/estado', [TipoActaController::class, 'cambiarEstado'])
+        ->middleware('permiso:tipos_acta.cambiar_estado')
+        ->name('tipos-acta.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ubicaciones
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/ubicaciones', [UbicacionController::class, 'index'])
+        ->middleware('permiso:ubicaciones.ver')
+        ->name('ubicaciones.index');
+
+    Route::get('/ubicaciones/crear', [UbicacionController::class, 'create'])
+        ->middleware('permiso:ubicaciones.crear')
+        ->name('ubicaciones.create');
+
+    Route::post('/ubicaciones', [UbicacionController::class, 'store'])
+        ->middleware('permiso:ubicaciones.crear')
+        ->name('ubicaciones.store');
+
+    Route::get('/ubicaciones/{ubicacion}/editar', [UbicacionController::class, 'edit'])
+        ->middleware('permiso:ubicaciones.editar')
+        ->name('ubicaciones.edit');
+
+    Route::put('/ubicaciones/{ubicacion}', [UbicacionController::class, 'update'])
+        ->middleware('permiso:ubicaciones.editar')
+        ->name('ubicaciones.update');
+
+    Route::patch('/ubicaciones/{ubicacion}/estado', [UbicacionController::class, 'cambiarEstado'])
+        ->middleware('permiso:ubicaciones.cambiar_estado')
+        ->name('ubicaciones.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Actas históricas
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/actas', [ActaController::class, 'index'])
+        ->middleware('permiso:actas.ver')
+        ->name('actas.index');
+
+    Route::get('/actas/crear', [ActaController::class, 'create'])
+        ->middleware('permiso:actas.crear')
+        ->name('actas.create');
+
+    Route::post('/actas', [ActaController::class, 'store'])
+        ->middleware('permiso:actas.crear')
+        ->name('actas.store');
+
+    Route::get('/actas/{acta}/editar', [ActaController::class, 'edit'])
+        ->middleware('permiso:actas.editar')
+        ->name('actas.edit');
+
+    Route::put('/actas/{acta}', [ActaController::class, 'update'])
+        ->middleware('permiso:actas.editar')
+        ->name('actas.update');
+
+    Route::patch('/actas/{acta}/estado', [ActaController::class, 'cambiarEstado'])
+        ->middleware('permiso:actas.cambiar_estado')
+        ->name('actas.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Estudiantes asociados a actas
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/actas/{acta}/estudiantes',
+        [ActaEstudianteController::class, 'index']
+    )
+        ->middleware('permiso:actas.asignar_estudiantes')
+        ->name('actas.estudiantes.index');
+
+    Route::post(
+        '/actas/{acta}/estudiantes',
+        [ActaEstudianteController::class, 'store']
+    )
+        ->middleware('permiso:actas.asignar_estudiantes')
+        ->name('actas.estudiantes.store');
+
+    Route::patch(
+        '/actas/{acta}/estudiantes/{actaEstudiante}/estado',
+        [ActaEstudianteController::class, 'cambiarEstado']
+    )
+        ->middleware('permiso:actas.asignar_estudiantes')
+        ->name('actas.estudiantes.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Asignaturas
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/asignaturas', [AsignaturaController::class, 'index'])
+        ->middleware('permiso:asignaturas.ver')
+        ->name('asignaturas.index');
+
+    Route::get('/asignaturas/crear', [AsignaturaController::class, 'create'])
+        ->middleware('permiso:asignaturas.crear')
+        ->name('asignaturas.create');
+
+    Route::post('/asignaturas', [AsignaturaController::class, 'store'])
+        ->middleware('permiso:asignaturas.crear')
+        ->name('asignaturas.store');
+
+    Route::get('/asignaturas/{asignatura}/editar', [AsignaturaController::class, 'edit'])
+        ->middleware('permiso:asignaturas.editar')
+        ->name('asignaturas.edit');
+
+    Route::put('/asignaturas/{asignatura}', [AsignaturaController::class, 'update'])
+        ->middleware('permiso:asignaturas.editar')
+        ->name('asignaturas.update');
+
+    Route::patch('/asignaturas/{asignatura}/estado', [AsignaturaController::class, 'cambiarEstado'])
+        ->middleware('permiso:asignaturas.cambiar_estado')
+        ->name('asignaturas.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cursos desaprobados
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/cursos-desaprobados',
+        [CursoDesaprobadoController::class, 'index']
+    )
+        ->middleware('permiso:cursos_desaprobados.ver')
+        ->name('cursos-desaprobados.index');
+
+    Route::get(
+        '/cursos-desaprobados/crear',
+        [CursoDesaprobadoController::class, 'create']
+    )
+        ->middleware('permiso:cursos_desaprobados.crear')
+        ->name('cursos-desaprobados.create');
+
+    Route::post(
+        '/cursos-desaprobados',
+        [CursoDesaprobadoController::class, 'store']
+    )
+        ->middleware('permiso:cursos_desaprobados.crear')
+        ->name('cursos-desaprobados.store');
+
+    Route::get(
+        '/cursos-desaprobados/{cursoDesaprobado}/editar',
+        [CursoDesaprobadoController::class, 'edit']
+    )
+        ->middleware('permiso:cursos_desaprobados.editar')
+        ->name('cursos-desaprobados.edit');
+
+    Route::put(
+        '/cursos-desaprobados/{cursoDesaprobado}',
+        [CursoDesaprobadoController::class, 'update']
+    )
+        ->middleware('permiso:cursos_desaprobados.editar')
+        ->name('cursos-desaprobados.update');
+
+    Route::patch(
+        '/cursos-desaprobados/{cursoDesaprobado}/estado',
+        [CursoDesaprobadoController::class, 'cambiarEstado']
+    )
+        ->middleware('permiso:cursos_desaprobados.cambiar_estado')
+        ->name('cursos-desaprobados.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Subsanaciones
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/subsanaciones',
+        [SubsanacionController::class, 'index']
+    )
+        ->middleware('permiso:subsanaciones.ver')
+        ->name('subsanaciones.index');
+
+    Route::get(
+        '/subsanaciones/crear',
+        [SubsanacionController::class, 'create']
+    )
+        ->middleware('permiso:subsanaciones.crear')
+        ->name('subsanaciones.create');
+
+    Route::post(
+        '/subsanaciones',
+        [SubsanacionController::class, 'store']
+    )
+        ->middleware('permiso:subsanaciones.crear')
+        ->name('subsanaciones.store');
+
+    Route::get(
+        '/subsanaciones/{subsanacion}/editar',
+        [SubsanacionController::class, 'edit']
+    )
+        ->middleware('permiso:subsanaciones.editar')
+        ->name('subsanaciones.edit');
+
+    Route::put(
+        '/subsanaciones/{subsanacion}',
+        [SubsanacionController::class, 'update']
+    )
+        ->middleware('permiso:subsanaciones.editar')
+        ->name('subsanaciones.update');
+
+    Route::patch(
+        '/subsanaciones/{subsanacion}/estado',
+        [SubsanacionController::class, 'cambiarEstado']
+    )
+        ->middleware('permiso:subsanaciones.cambiar_estado')
+        ->name('subsanaciones.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Digitalización documental
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/digitalizaciones',
+        [DigitalizacionController::class, 'index']
+    )
+        ->middleware('permiso:digitalizaciones.ver')
+        ->name('digitalizaciones.index');
+
+    Route::get(
+        '/digitalizaciones/crear',
+        [DigitalizacionController::class, 'create']
+    )
+        ->middleware('permiso:digitalizaciones.crear')
+        ->name('digitalizaciones.create');
+
+    Route::post(
+        '/digitalizaciones',
+        [DigitalizacionController::class, 'store']
+    )
+        ->middleware('permiso:digitalizaciones.crear')
+        ->name('digitalizaciones.store');
+
+    Route::get(
+        '/digitalizaciones/{digitalizacion}/descargar',
+        [DigitalizacionController::class, 'descargar']
+    )
+        ->middleware('permiso:digitalizaciones.descargar')
+        ->name('digitalizaciones.descargar');
+
+    Route::patch(
+        '/digitalizaciones/{digitalizacion}/estado',
+        [DigitalizacionController::class, 'cambiarEstado']
+    )
+        ->middleware('permiso:digitalizaciones.cambiar_estado')
+        ->name('digitalizaciones.cambiar-estado');
+
+    /*
+    |--------------------------------------------------------------------------
+    | MÓDULO 6 - BÚSQUEDA Y LOCALIZACIÓN
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/busqueda',
+        [BusquedaController::class, 'index']
+    )
+        ->middleware('permiso:busquedas.ver')
+        ->name('busqueda.index');
+
+    /*
+    |--------------------------------------------------------------------------
     | Cerrar sesión
     |--------------------------------------------------------------------------
     */
+
     Route::post('/logout', [LoginController::class, 'logout'])
         ->name('logout');
 

@@ -237,6 +237,255 @@ class SecuritySeeder extends Seeder
                 'modulo' => 'Estudiantes',
                 'descripcion' => 'Permite activar o desactivar estudiantes.',
             ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 3 - TIPOS DE ACTA
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver tipos de acta',
+                'slug' => 'tipos_acta.ver',
+                'modulo' => 'Tipos de acta',
+                'descripcion' => 'Permite consultar los tipos de acta registrados.',
+            ],
+            [
+                'nombre' => 'Crear tipos de acta',
+                'slug' => 'tipos_acta.crear',
+                'modulo' => 'Tipos de acta',
+                'descripcion' => 'Permite registrar nuevos tipos de acta.',
+            ],
+            [
+                'nombre' => 'Editar tipos de acta',
+                'slug' => 'tipos_acta.editar',
+                'modulo' => 'Tipos de acta',
+                'descripcion' => 'Permite modificar los tipos de acta registrados.',
+            ],
+            [
+                'nombre' => 'Cambiar estado de tipos de acta',
+                'slug' => 'tipos_acta.cambiar_estado',
+                'modulo' => 'Tipos de acta',
+                'descripcion' => 'Permite activar o desactivar tipos de acta.',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 3 - UBICACIONES
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver ubicaciones',
+                'slug' => 'ubicaciones.ver',
+                'modulo' => 'Ubicaciones',
+                'descripcion' => 'Permite consultar las ubicaciones físicas registradas.',
+            ],
+            [
+                'nombre' => 'Crear ubicaciones',
+                'slug' => 'ubicaciones.crear',
+                'modulo' => 'Ubicaciones',
+                'descripcion' => 'Permite registrar nuevas ubicaciones físicas documentales.',
+            ],
+            [
+                'nombre' => 'Editar ubicaciones',
+                'slug' => 'ubicaciones.editar',
+                'modulo' => 'Ubicaciones',
+                'descripcion' => 'Permite modificar las ubicaciones físicas registradas.',
+            ],
+            [
+                'nombre' => 'Cambiar estado de ubicaciones',
+                'slug' => 'ubicaciones.cambiar_estado',
+                'modulo' => 'Ubicaciones',
+                'descripcion' => 'Permite activar o desactivar ubicaciones físicas.',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 3 - ACTAS
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver actas',
+                'slug' => 'actas.ver',
+                'modulo' => 'Actas',
+                'descripcion' => 'Permite consultar las actas históricas registradas.',
+            ],
+            [
+                'nombre' => 'Crear actas',
+                'slug' => 'actas.crear',
+                'modulo' => 'Actas',
+                'descripcion' => 'Permite registrar nuevas actas históricas.',
+            ],
+            [
+                'nombre' => 'Editar actas',
+                'slug' => 'actas.editar',
+                'modulo' => 'Actas',
+                'descripcion' => 'Permite modificar la información de las actas registradas.',
+            ],
+            [
+                'nombre' => 'Cambiar estado de actas',
+                'slug' => 'actas.cambiar_estado',
+                'modulo' => 'Actas',
+                'descripcion' => 'Permite activar o desactivar actas registradas.',
+            ],
+            [
+                'nombre' => 'Asignar estudiantes a actas',
+                'slug' => 'actas.asignar_estudiantes',
+                'modulo' => 'Actas',
+                'descripcion' => 'Permite relacionar o modificar los estudiantes asociados a un acta.',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 4 - ASIGNATURAS
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver asignaturas',
+                'slug' => 'asignaturas.ver',
+                'modulo' => 'Asignaturas',
+                'descripcion' => 'Permite consultar las asignaturas registradas.',
+            ],
+            [
+                'nombre' => 'Crear asignaturas',
+                'slug' => 'asignaturas.crear',
+                'modulo' => 'Asignaturas',
+                'descripcion' => 'Permite registrar nuevas asignaturas.',
+            ],
+            [
+                'nombre' => 'Editar asignaturas',
+                'slug' => 'asignaturas.editar',
+                'modulo' => 'Asignaturas',
+                'descripcion' => 'Permite modificar las asignaturas registradas.',
+            ],
+            [
+                'nombre' => 'Cambiar estado de asignaturas',
+                'slug' => 'asignaturas.cambiar_estado',
+                'modulo' => 'Asignaturas',
+                'descripcion' => 'Permite activar o desactivar asignaturas.',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 4 - CURSOS DESAPROBADOS
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver cursos desaprobados',
+                'slug' => 'cursos_desaprobados.ver',
+                'modulo' => 'Cursos desaprobados',
+                'descripcion' => 'Permite consultar los cursos desaprobados registrados para los estudiantes.',
+            ],
+            [
+                'nombre' => 'Crear cursos desaprobados',
+                'slug' => 'cursos_desaprobados.crear',
+                'modulo' => 'Cursos desaprobados',
+                'descripcion' => 'Permite registrar cursos desaprobados asociados a estudiantes y actas históricas.',
+            ],
+            [
+                'nombre' => 'Editar cursos desaprobados',
+                'slug' => 'cursos_desaprobados.editar',
+                'modulo' => 'Cursos desaprobados',
+                'descripcion' => 'Permite modificar la información de los cursos desaprobados registrados.',
+            ],
+            [
+                'nombre' => 'Cambiar estado de cursos desaprobados',
+                'slug' => 'cursos_desaprobados.cambiar_estado',
+                'modulo' => 'Cursos desaprobados',
+                'descripcion' => 'Permite activar o desactivar cursos desaprobados registrados.',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 4 - SUBSANACIONES
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver subsanaciones',
+                'slug' => 'subsanaciones.ver',
+                'modulo' => 'Subsanaciones',
+                'descripcion' => 'Permite consultar las subsanaciones registradas.',
+            ],
+            [
+                'nombre' => 'Crear subsanaciones',
+                'slug' => 'subsanaciones.crear',
+                'modulo' => 'Subsanaciones',
+                'descripcion' => 'Permite registrar nuevas subsanaciones de cursos desaprobados.',
+            ],
+            [
+                'nombre' => 'Editar subsanaciones',
+                'slug' => 'subsanaciones.editar',
+                'modulo' => 'Subsanaciones',
+                'descripcion' => 'Permite modificar la información de las subsanaciones registradas.',
+            ],
+            [
+                'nombre' => 'Cambiar estado de subsanaciones',
+                'slug' => 'subsanaciones.cambiar_estado',
+                'modulo' => 'Subsanaciones',
+                'descripcion' => 'Permite activar o desactivar subsanaciones registradas.',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 5 - DIGITALIZACIÓN DOCUMENTAL
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver digitalizaciones',
+                'slug' => 'digitalizaciones.ver',
+                'modulo' => 'Digitalización documental',
+                'descripcion' => 'Permite consultar el repositorio de documentos digitalizados.',
+            ],
+            [
+                'nombre' => 'Crear digitalizaciones',
+                'slug' => 'digitalizaciones.crear',
+                'modulo' => 'Digitalización documental',
+                'descripcion' => 'Permite cargar documentos históricos en formato PDF, JPG o PNG.',
+            ],
+            [
+                'nombre' => 'Procesar OCR',
+                'slug' => 'digitalizaciones.procesar_ocr',
+                'modulo' => 'Digitalización documental',
+                'descripcion' => 'Permite iniciar o repetir el procesamiento OCR de documentos digitalizados.',
+            ],
+            [
+                'nombre' => 'Revisar digitalizaciones',
+                'slug' => 'digitalizaciones.revisar',
+                'modulo' => 'Digitalización documental',
+                'descripcion' => 'Permite revisar, corregir y validar los datos obtenidos mediante OCR.',
+            ],
+            [
+                'nombre' => 'Descargar digitalizaciones',
+                'slug' => 'digitalizaciones.descargar',
+                'modulo' => 'Digitalización documental',
+                'descripcion' => 'Permite visualizar o descargar los archivos digitalizados almacenados.',
+            ],
+            [
+                'nombre' => 'Cambiar estado de digitalizaciones',
+                'slug' => 'digitalizaciones.cambiar_estado',
+                'modulo' => 'Digitalización documental',
+                'descripcion' => 'Permite activar o desactivar documentos digitalizados.',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | MÓDULO 6 - BÚSQUEDA Y LOCALIZACIÓN
+            |--------------------------------------------------------------------------
+            */
+
+            [
+                'nombre' => 'Ver búsqueda y localización',
+                'slug' => 'busquedas.ver',
+                'modulo' => 'Búsqueda y localización',
+                'descripcion' => 'Permite buscar documentos históricos y consultar su ubicación física.',
+            ],
+
         ];
 
         /*
@@ -244,6 +493,7 @@ class SecuritySeeder extends Seeder
         | Registrar o actualizar permisos
         |--------------------------------------------------------------------------
         */
+
         foreach ($permisos as $permiso) {
             Permission::updateOrCreate(
                 [
@@ -263,6 +513,7 @@ class SecuritySeeder extends Seeder
         | Rol Administrador
         |--------------------------------------------------------------------------
         */
+
         $administrador = Role::updateOrCreate(
             [
                 'slug' => 'administrador',
@@ -279,6 +530,7 @@ class SecuritySeeder extends Seeder
         | El Administrador recibe todos los permisos activos
         |--------------------------------------------------------------------------
         */
+
         $administrador->permissions()->sync(
             Permission::where('activo', true)->pluck('id')
         );

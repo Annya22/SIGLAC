@@ -30,22 +30,58 @@ return [
 
     'disks' => [
 
+        /*
+        |--------------------------------------------------------------------------
+        | Almacenamiento privado
+        |--------------------------------------------------------------------------
+        |
+        | SIGLAC utiliza este disco para documentos históricos digitalizados.
+        | Los archivos no deben exponerse directamente mediante una URL.
+        | Su acceso será controlado por Laravel, autenticación y permisos.
+        |
+        */
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],
 
+        /*
+        |--------------------------------------------------------------------------
+        | Almacenamiento público
+        |--------------------------------------------------------------------------
+        |
+        | Este disco se mantiene únicamente para archivos que realmente
+        | puedan ser públicos. Las actas, certificados y digitalizaciones
+        | de SIGLAC NO se almacenarán aquí.
+        |
+        */
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            'url' => rtrim(
+                env('APP_URL', 'http://localhost'),
+                '/'
+            ).'/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Amazon S3
+        |--------------------------------------------------------------------------
+        |
+        | Se conserva disponible para una futura integración con AWS.
+        | Las credenciales se obtendrán exclusivamente desde variables
+        | de entorno y nunca se escribirán directamente en el código.
+        |
+        */
 
         's3' => [
             'driver' => 's3',
@@ -55,7 +91,10 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'use_path_style_endpoint' => env(
+                'AWS_USE_PATH_STYLE_ENDPOINT',
+                false
+            ),
             'throw' => false,
             'report' => false,
         ],
@@ -67,9 +106,8 @@ return [
     | Symbolic Links
     |--------------------------------------------------------------------------
     |
-    | Here you may configure the symbolic links that will be created when the
-    | `storage:link` Artisan command is executed. The array keys should be
-    | the locations of the links and the values should be their targets.
+    | Este enlace corresponde exclusivamente al disco "public".
+    | No permite acceder a storage/app/private.
     |
     */
 

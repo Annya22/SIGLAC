@@ -26,18 +26,6 @@ class InstitucionEducativa extends Model
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Relación con niveles educativos
-    |--------------------------------------------------------------------------
-    |
-    | Una institución educativa puede ofrecer uno o varios niveles.
-    | Ejemplo:
-    |
-    | IE X → Primaria
-    | IE X → Secundaria
-    |
-    */
     public function niveles()
     {
         return $this->belongsToMany(
@@ -55,11 +43,6 @@ class InstitucionEducativa extends Model
             ->withTimestamps();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Registros de la tabla intermedia
-    |--------------------------------------------------------------------------
-    */
     public function institucionNiveles()
     {
         return $this->hasMany(
@@ -68,11 +51,14 @@ class InstitucionEducativa extends Model
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que creó el registro
-    |--------------------------------------------------------------------------
-    */
+    public function actas()
+    {
+        return $this->hasMany(
+            Acta::class,
+            'institucion_educativa_id'
+        );
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(
@@ -81,11 +67,6 @@ class InstitucionEducativa extends Model
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que realizó la última modificación
-    |--------------------------------------------------------------------------
-    */
     public function updatedBy()
     {
         return $this->belongsTo(

@@ -29,11 +29,31 @@ class Estudiante extends Model
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que creó el registro
-    |--------------------------------------------------------------------------
-    */
+    public function actas()
+    {
+        return $this->belongsToMany(
+            Acta::class,
+            'acta_estudiantes',
+            'estudiante_id',
+            'acta_id'
+        )
+            ->withPivot([
+                'id',
+                'activo',
+                'created_by',
+                'updated_by',
+            ])
+            ->withTimestamps();
+    }
+
+    public function actaEstudiantes()
+    {
+        return $this->hasMany(
+            ActaEstudiante::class,
+            'estudiante_id'
+        );
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(
@@ -42,11 +62,6 @@ class Estudiante extends Model
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que realizó la última modificación
-    |--------------------------------------------------------------------------
-    */
     public function updatedBy()
     {
         return $this->belongsTo(

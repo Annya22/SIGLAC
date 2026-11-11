@@ -337,17 +337,33 @@
 
     <aside class="sidebar">
 
-{{-- INICIO --}}
-<div class="sidebar-section">
+        {{-- INICIO --}}
+        <div class="sidebar-section">
 
-    <a
-        href="{{ route('dashboard') }}"
-        class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
-    >
-        Inicio
-    </a>
+            <a
+                href="{{ route('dashboard') }}"
+                class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
+            >
+                Inicio
+            </a>
 
-</div>
+        </div>
+
+        {{-- BÚSQUEDA Y LOCALIZACIÓN --}}
+        @if (auth()->user()->hasPermission('busquedas.ver'))
+
+            <div class="sidebar-section">
+
+                <a
+                    href="{{ route('busqueda.index') }}"
+                    class="{{ request()->routeIs('busqueda.*') ? 'active' : '' }}"
+                >
+                    Búsqueda y localización
+                </a>
+
+            </div>
+
+        @endif
 
         {{-- SEGURIDAD --}}
         @if (
@@ -419,7 +435,6 @@
             </div>
 
         @endif
-
 
         {{-- DATOS ACADÉMICOS --}}
         @if (
@@ -505,6 +520,165 @@
 
         @endif
 
+        {{-- GESTIÓN DOCUMENTAL --}}
+        @if (
+            auth()->user()->hasPermission('tipos_acta.ver') ||
+            auth()->user()->hasPermission('ubicaciones.ver') ||
+            auth()->user()->hasPermission('actas.ver') ||
+            auth()->user()->hasPermission('digitalizaciones.ver')
+        )
+
+            @php
+                $documentalAbierto =
+                    request()->routeIs('tipos-acta.*') ||
+                    request()->routeIs('ubicaciones.*') ||
+                    request()->routeIs('actas.*') ||
+                    request()->routeIs('digitalizaciones.*');
+            @endphp
+
+            <div class="sidebar-section">
+
+                <button
+                    type="button"
+                    class="sidebar-toggle"
+                    data-sidebar-toggle="documental-menu"
+                    aria-expanded="{{ $documentalAbierto ? 'true' : 'false' }}"
+                >
+                    <span>Gestión documental</span>
+                    <span class="sidebar-arrow">⌄</span>
+                </button>
+
+                <div
+                    id="documental-menu"
+                    class="sidebar-menu"
+                    @if (!$documentalAbierto) hidden @endif
+                >
+
+                    @if (auth()->user()->hasPermission('tipos_acta.ver'))
+
+                        <a
+                            href="{{ route('tipos-acta.index') }}"
+                            class="{{ request()->routeIs('tipos-acta.*') ? 'active' : '' }}"
+                        >
+                            Tipos de acta
+                        </a>
+
+                    @endif
+
+                    @if (auth()->user()->hasPermission('ubicaciones.ver'))
+
+                        <a
+                            href="{{ route('ubicaciones.index') }}"
+                            class="{{ request()->routeIs('ubicaciones.*') ? 'active' : '' }}"
+                        >
+                            Ubicaciones
+                        </a>
+
+                    @endif
+
+                    @if (auth()->user()->hasPermission('actas.ver'))
+
+                        <a
+                            href="{{ route('actas.index') }}"
+                            class="{{ request()->routeIs('actas.*') ? 'active' : '' }}"
+                        >
+                            Actas históricas
+                        </a>
+
+                    @endif
+
+                    @if (auth()->user()->hasPermission('digitalizaciones.ver'))
+
+                        <a
+                            href="{{ route('digitalizaciones.index') }}"
+                            class="{{ request()->routeIs('digitalizaciones.*') ? 'active' : '' }}"
+                        >
+                            Documentos digitalizados
+                        </a>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+        @endif
+
+        {{-- SUBSANACIONES --}}
+        @if (
+            auth()->user()->hasPermission('asignaturas.ver') ||
+            auth()->user()->hasPermission('cursos_desaprobados.ver') ||
+            auth()->user()->hasPermission('subsanaciones.ver')
+        )
+
+            @php
+                $subsanacionesAbierto =
+                    request()->routeIs('asignaturas.*') ||
+                    request()->routeIs('cursos-desaprobados.*') ||
+                    request()->routeIs('subsanaciones.*');
+            @endphp
+
+            <div class="sidebar-section">
+
+                <button
+                    type="button"
+                    class="sidebar-toggle"
+                    data-sidebar-toggle="subsanaciones-menu"
+                    aria-expanded="{{ $subsanacionesAbierto ? 'true' : 'false' }}"
+                >
+                    <span>Subsanaciones</span>
+                    <span class="sidebar-arrow">⌄</span>
+                </button>
+
+                <div
+                    id="subsanaciones-menu"
+                    class="sidebar-menu"
+                    @if (!$subsanacionesAbierto) hidden @endif
+                >
+
+                    @if (auth()->user()->hasPermission('asignaturas.ver'))
+
+                        <a
+                            href="{{ route('asignaturas.index') }}"
+                            class="{{ request()->routeIs('asignaturas.*') ? 'active' : '' }}"
+                        >
+                            Asignaturas
+                        </a>
+
+                    @endif
+
+                    @if (
+                        auth()->user()->hasPermission(
+                            'cursos_desaprobados.ver'
+                        )
+                    )
+
+                        <a
+                            href="{{ route('cursos-desaprobados.index') }}"
+                            class="{{ request()->routeIs('cursos-desaprobados.*') ? 'active' : '' }}"
+                        >
+                            Cursos desaprobados
+                        </a>
+
+                    @endif
+
+                    @if (auth()->user()->hasPermission('subsanaciones.ver'))
+
+                        <a
+                            href="{{ route('subsanaciones.index') }}"
+                            class="{{ request()->routeIs('subsanaciones.*') ? 'active' : '' }}"
+                        >
+                            Subsanaciones
+                        </a>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+        @endif
+
     </aside>
 
     <main class="content">
@@ -543,7 +717,8 @@
                 return;
             }
 
-            const estaAbierto = button.getAttribute('aria-expanded') === 'true';
+            const estaAbierto =
+                button.getAttribute('aria-expanded') === 'true';
 
             button.setAttribute(
                 'aria-expanded',

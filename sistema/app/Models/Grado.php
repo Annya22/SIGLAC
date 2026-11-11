@@ -28,17 +28,6 @@ class Grado extends Model
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Nivel al que pertenece el grado
-    |--------------------------------------------------------------------------
-    |
-    | Ejemplo:
-    |
-    | 1.º → Primaria
-    | 1.º → Secundaria
-    |
-    */
     public function nivel()
     {
         return $this->belongsTo(
@@ -47,11 +36,14 @@ class Grado extends Model
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que creó el registro
-    |--------------------------------------------------------------------------
-    */
+    public function actas()
+    {
+        return $this->hasMany(
+            Acta::class,
+            'grado_id'
+        );
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(
@@ -60,11 +52,6 @@ class Grado extends Model
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Usuario que realizó la última modificación
-    |--------------------------------------------------------------------------
-    */
     public function updatedBy()
     {
         return $this->belongsTo(
